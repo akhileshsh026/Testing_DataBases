@@ -6,28 +6,25 @@ using System.Threading.Tasks;
 using MongoDB.Bson;
 using MongoDB.Driver;
 
-namespace Testing_DataBases
+namespace Testing_MongoDB
 {
-    public class Student
+    public class Students
     {
-        public ObjectId ID { get; set; }
+        public ObjectId Id { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public string City { get; set; }
         public string Age { get; set; }
-
     }
-    
 
-
-    class Program
+    public class Program1
     {
         protected static IMongoClient _client;
         protected static IMongoDatabase _database;
 
-        public static Student GetStudent()
+        public static Students GetStudent()
         {
-            Console.WriteLine("Enter student 1st anme");
+            Console.WriteLine("Please enter student first name : ");
             string FNm = Console.ReadLine();
 
             Console.WriteLine("Please enter student last name : ");
@@ -39,25 +36,25 @@ namespace Testing_DataBases
             Console.WriteLine("Please enter city name : ");
             string StudentCity = Console.ReadLine();
 
-            Student student = new Student()
+            Students student = new Students()
             {
                 FirstName = FNm,
                 LastName = LNm,
                 Age = StudentAge,
                 City = StudentCity,
-
             };
 
             return student;
         }
 
-        public void CRUDWithMongoDb()
+        public void CRUDwithMongoDb()
         {
             _client = new MongoClient();
             _database = _client.GetDatabase("School");
-            var _collection = _database.GetCollection<Student>("StudentDetails");
+            var _collection = _database.GetCollection<Students>("StudentDetails");
 
-            Console.WriteLine("press 1,2,3,4");
+            Console.WriteLine
+                ("Press select your option from the following\n1 - Insert\n2 - Update One Document\n3 - Delete\n4 - Read All\n");
             string userSelection = Console.ReadLine();
 
             switch (userSelection)
@@ -71,8 +68,8 @@ namespace Testing_DataBases
                     //Update  
                     var obj1 = GetStudent();
 
-                    _collection.FindOneAndUpdate<Student>
-                        (Builders<Student>.Filter.Eq("FirstName", obj1.FirstName),
+                    _collection.FindOneAndUpdate<Students>
+                        (Builders<Students>.Filter.Eq("FirstName", obj1.FirstName),
                             Builders<Students>.Update.Set("LastName", obj1.LastName).Set("City", obj1.City).Set("Age", obj1.Age));
                     break;
 
@@ -101,12 +98,30 @@ namespace Testing_DataBases
                     break;
             }
 
+            //To continue with Program  
+            Console.WriteLine("\n--------------------------------------------------------------\nPress Y for continue...\n");
+            string userChoice = Console.ReadLine();
 
+            if (userChoice == "Y" || userChoice == "y")
+            {
+                this.CRUDwithMongoDb();
+            }
         }
 
-        static void Main(string[] args)
+        class Program
         {
-            
+            static void Main(string[] args)
+            {
+                Program1 p = new Program1();
+                p.CRUDwithMongoDb();
+
+
+                //Hold the screen by logic  
+                Console.WriteLine("Press any key to trminated the program");
+                Console.ReadKey();
+            }
         }
+
+
     }
 }
