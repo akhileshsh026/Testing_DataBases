@@ -12,14 +12,14 @@ using System.Data;
 
 namespace SQL_Server_INdepth_Via_WForms
 {
-    public partial class Form1 : Form
+    public partial class DataSet_Example_1 : Form
     {
         SqlConnection con;
         SqlDataAdapter da;
         SqlCommandBuilder cb;
         DataSet ds;
         int rno = 0;
-        public Form1()
+        public DataSet_Example_1()
         {
             InitializeComponent();
             con = new SqlConnection("Data Source=52.163.221.206;User Id=sa;Password=Akhilesh@123;DataBase=Company");

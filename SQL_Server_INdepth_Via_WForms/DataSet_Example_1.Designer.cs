@@ -1,6 +1,6 @@
 ﻿namespace SQL_Server_INdepth_Via_WForms
 {
-    partial class Form1
+    partial class DataSet_Example_1
     {
         /// <summary>
         /// Required designer variable.
