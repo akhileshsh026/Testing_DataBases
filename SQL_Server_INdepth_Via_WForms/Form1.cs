@@ -1,4 +1,5 @@
 ﻿using System;
+using Microsoft.VisualBasic;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data.SqlClient;
@@ -17,12 +18,12 @@ namespace SQL_Server_INdepth_Via_WForms
         SqlDataAdapter da;
         SqlCommandBuilder cb;
         DataSet ds;
-        int rno=0;
+        int rno = 0;
         public Form1()
         {
             InitializeComponent();
-             con = new SqlConnection("Data Source=52.163.221.206;User Id=sa;Password=Akhilesh@123;DataBase=Company");
-             con.Open();
+            con = new SqlConnection("Data Source=52.163.221.206;User Id=sa;Password=Akhilesh@123;DataBase=Company");
+            con.Open();
             da = new SqlDataAdapter("Select * from Employee", con);
             ds = new DataSet();
             da.MissingSchemaAction = MissingSchemaAction.AddWithKey;
@@ -92,7 +93,7 @@ namespace SQL_Server_INdepth_Via_WForms
         {
             textBox_Eno.Text = textBox_Ename.Text = textBox_Job.Text = textBox_Salary.Text = "";
             int index = ds.Tables[0].Rows.Count - 1;
-            int eno = Convert.ToInt32(ds.Tables[0].Rows[index][0])+1;
+            int eno = Convert.ToInt32(ds.Tables[0].Rows[index][0]) + 1;
             textBox_Eno.Text = eno.ToString();
             textBox_Ename.Focus();
 
@@ -140,7 +141,31 @@ namespace SQL_Server_INdepth_Via_WForms
 
         private void button_Search_Click(object sender, EventArgs e)
         {
-
+            string value = Interaction.InputBox("Enter Employee No :", "Employee Search :", "", 150, 150);
+            if (value.Trim().Length > 0)
+            {
+                int result;
+                bool enoo = int.TryParse(value, out result);
+                if (enoo)
+                {
+                    DataRow dr = ds.Tables[0].Rows.Find(int.Parse(value));
+                    if (dr != null)
+                    {
+                        textBox_Eno.Text = dr[0].ToString();
+                        textBox_Ename.Text = dr[1].ToString();
+                        textBox_Job.Text = dr[2].ToString();
+                        textBox_Salary.Text = dr[3].ToString();
+                    }
+                    else
+                    {
+                        MessageBox.Show("Employee does not exists under this Eno");
+                    }
+                }
+                else
+                {
+                    MessageBox.Show("Enter correct Number or number only ");
+                }
+            }
         }
     }
 }
