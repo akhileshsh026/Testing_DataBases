@@ -23,7 +23,9 @@ namespace MongoUnivercityForDotNetDev
 
         static async Task MainAsync(string[] args)
         {
-            var conventionPack = new ConventionPack();
+          // there are 3  ways to configure the mapping from POCOs to Bson
+
+           var conventionPack = new ConventionPack();
             conventionPack.Add(new CamelCaseElementNameConvention());
             ConventionRegistry.Register("camelCase", conventionPack,t=>true); // true is for all but for specific t => t.Name then only namewill be small.
 
