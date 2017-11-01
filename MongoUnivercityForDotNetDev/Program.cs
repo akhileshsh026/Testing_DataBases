@@ -43,7 +43,7 @@ namespace MongoUnivercityForDotNetDev
             // and as the Person class is static so we didn't get the correct data for that class needs to static. 
 
             var list = await col.Find(new BsonDocument())
-                        .Project(x => x.Name)
+                        .Project(x => new { x.Name, calcAge = x.Age + 20 })
                         .ToListAsync();
             foreach (var item in list)
             {
