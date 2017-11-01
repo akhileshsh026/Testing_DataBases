@@ -28,16 +28,13 @@ namespace MongoUnivercityForDotNetDev
 
             var col = db.GetCollection<Person>("People");
 
-            var doc = new Person
+            var filter = new BsonDocument("Name", "Akhilesh Kumar");
+            var list = await col.Find(filter).ToListAsync();
+
+            foreach (var item in list)
             {
-                Name = "Akhilesh Kumar DBwala",
-                Age=30,
-                Profession="DataBase Engineer"
-            };
-            Console.WriteLine(doc.Id);
-         
-            await col.InsertOneAsync(doc);
-            Console.WriteLine(doc.Id);
+                Console.WriteLine(item);
+            }
         }
     }
 }
