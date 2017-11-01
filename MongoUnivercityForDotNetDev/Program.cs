@@ -26,12 +26,12 @@ namespace MongoUnivercityForDotNetDev
             var client = new MongoClient("mongodb://localhost:27017");
             var db = client.GetDatabase("test");
 
-            var col = db.GetCollection<BsonDocument>("People");
+            var col = db.GetCollection<Person>("People");
 
 
             var builder = Builders<BsonDocument>.Filter;
 
-            var list = await col.Find(new BsonDocument()).Sort(Builders<BsonDocument>.Sort.Ascending("Name").Descending("Profession")).ToListAsync();
+            var list = await col.Find(new BsonDocument()).Sort(Builders<Person>.Sort.Ascending("Name").Descending("Profession")).ToListAsync();
 
             foreach (var item in list)
             {
