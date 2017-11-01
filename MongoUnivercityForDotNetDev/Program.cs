@@ -47,6 +47,7 @@ namespace MongoUnivercityForDotNetDev
             Console.WriteLine(doc);
             Console.WriteLine();
             Console.WriteLine(doc["array"][0]["color"]);
+           
 
 
         }
