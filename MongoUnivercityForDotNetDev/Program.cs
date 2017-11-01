@@ -41,10 +41,13 @@ namespace MongoUnivercityForDotNetDev
 
             // Bson Array that is actually exists in document.
             var nestedArray = new BsonArray();
-            nestedArray.Add(new BsonDocument("colour", "red"));
+            nestedArray.Add(new BsonDocument("color", "red"));
 
             doc.Add("array", nestedArray);
             Console.WriteLine(doc);
+            Console.WriteLine();
+            Console.WriteLine(doc["array"][0]["color"]);
+
 
         }
     }
