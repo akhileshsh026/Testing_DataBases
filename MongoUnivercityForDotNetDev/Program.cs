@@ -32,7 +32,8 @@ namespace MongoUnivercityForDotNetDev
             var builder = Builders<BsonDocument>.Filter;
             var filter = builder.Lt("Age", 30)| builder.Eq("Name", "Akhilesh Kumar");  //or operator
             var filter1 = builder.Lt("Age", 30) & builder.Eq("Name", "Akhilesh Kumar");  //And operator
-           
+            var filter1 = builder.Lt("Age", 30) & !builder.Eq("Name", "Akhilesh Kumar");  //And not operator
+
             var list = await col.Find(filter).ToListAsync();
 
             foreach (var item in list)
