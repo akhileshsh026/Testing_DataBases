@@ -14,9 +14,9 @@ namespace MongoUnivercityForDotNetDev
         //Poco repeantation 1st way
         
         public ObjectId Id { get; set; }
-        [BsonElement("name")]
+        
         public string Name { get; set; }
-
+        [BsonRepresentation(BsonType.Int64)]
         public int Age { get; set; }
 
         public List<string> Colors { get; set; }
