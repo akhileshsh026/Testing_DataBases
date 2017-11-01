@@ -1,6 +1,7 @@
 ﻿using MongoDB.Bson;
 using MongoDB.Bson.IO;
 using MongoDB.Bson.Serialization;
+using MongoDB.Bson.Serialization.Conventions;
 using MongoDB.Driver;
 using System;
 using System.Collections.Generic;
@@ -22,11 +23,9 @@ namespace MongoUnivercityForDotNetDev
 
         static async Task MainAsync(string[] args)
         {
-            BsonClassMap.RegisterClassMap<Person>(cm =>
-            {
-                cm.AutoMap();
-                cm.MapMember(x => x.Name).SetElementName("name");
-            });
+            var conventionPack = new ConventionPack();
+            conventionPack.Add(new CamelCaseElementNameConvention());
+            ConventionRegistry.Register("camelCase", conventionPack,t=>true); // true is for all but for specific t => t.Name then only namewill be small.
 
             var Person = new Person
             {
