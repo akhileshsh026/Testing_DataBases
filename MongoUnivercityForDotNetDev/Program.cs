@@ -34,7 +34,7 @@ namespace MongoUnivercityForDotNetDev
             await col.InsertManyAsync(docs);
 
             //updateoneAsync require first filter and then update defination  
-            var result = await col.UpdateOneAsync(
+            var result = await col.UpdateManyAsync(
                 Builders<BsonDocument>.Filter.Gt("x",5),
                 Builders<BsonDocument>.Update.Inc("x",10));
             await col.Find(new BsonDocument()).ForEachAsync(x => Console.WriteLine(x));
