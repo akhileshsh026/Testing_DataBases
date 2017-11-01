@@ -29,11 +29,9 @@ namespace MongoUnivercityForDotNetDev
             var col = db.GetCollection<Person>("People");
 
 
-            var builder = Builders<Person>.Filter;
-            var filter = builder.Lt(x=>x.Age, 30)| builder.Eq(x=>x.Name, "Akhilesh Kumar Rajendra");  //or operator
-            
+            var builder = Builders<Person>.Filter;      
 
-            var list = await col.Find(filter).ToListAsync();
+            var list = await col.Find(x => x.Age== 30 && x.Name!="Akhilesh Kumar" ).ToListAsync();
 
             foreach (var item in list)
             {
