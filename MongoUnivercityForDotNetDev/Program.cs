@@ -26,18 +26,18 @@ namespace MongoUnivercityForDotNetDev
             var client = new MongoClient("mongodb://localhost:27017");
             var db = client.GetDatabase("test");
 
-            var col = db.GetCollection<BsonDocument>("People");
+            var col = db.GetCollection<Person>("People");
 
-            var doc = new BsonDocument
+            var doc = new Person
             {
-                { "Name","Akhilesh Kumar DBwala" }
-                
+                Name = "Akhilesh Kumar DBwala",
+                Age=30,
+                Profession="DataBase Engineer"
             };
-            Console.WriteLine(doc);
+            Console.WriteLine(doc.Id);
          
             await col.InsertOneAsync(doc);
-            doc.Remove("_id");
-            Console.WriteLine(doc);
+            Console.WriteLine(doc.Id);
         }
     }
 }
