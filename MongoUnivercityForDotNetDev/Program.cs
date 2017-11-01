@@ -1,4 +1,6 @@
 ﻿using MongoDB.Bson;
+using MongoDB.Bson.IO;
+using MongoDB.Bson.Serialization;
 using MongoDB.Driver;
 using System;
 using System.Collections.Generic;
@@ -20,35 +22,20 @@ namespace MongoUnivercityForDotNetDev
 
         static async Task MainAsync(string[] args)
         {
-            /*   var ConnectionString ="mongodb://localhost:27017";
-               var client = new MongoClient(ConnectionString);
-
-            // getting the databases schema commands with the help of clients.
-            var db =client.GetDatabase("test");
-            var col = db.GetCollection<Person>("movies"); */
-
-            var doc = new BsonDocument()
+            var Person = new Person
             {
-                { "Name","Akhilesh Kumar Sahu" }
+                Name = "Akhilesh Kumar Sahu",
+                Age = 30,
+                Colors = new List<string> { "blue", "red" },
+                Pets = new List<Pet> { new Pet { Name = "Golden Retriier", Type = "Dog" } },
+                ExtraElements = new BsonDocument("anotherName", "anothervalue")
             };
 
-            //adding field in document
-            doc.Add("Age",30);
+            using (var writer = new JsonWriter(Console.Out))
+            {
+                BsonSerializer.Serialize(writer,Person); 
+            }
             
-            // document array
-            doc["Profession"] = "Devloper";
-
-
-            // Bson Array that is actually exists in document.
-            var nestedArray = new BsonArray();
-            nestedArray.Add(new BsonDocument("color", "red"));
-
-            doc.Add("array", nestedArray);
-            Console.WriteLine(doc);
-            Console.WriteLine();
-            Console.WriteLine(doc["array"][0]["color"]);
-           
-
 
         }
     }
