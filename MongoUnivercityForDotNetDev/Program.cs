@@ -35,13 +35,13 @@ namespace MongoUnivercityForDotNetDev
 
             //updateoneAsync require first filter and then update defination  
             var result = await col.UpdateManyAsync(
-                Builders<Widget>.Filter.Gt(X=>X.x,5),
-                Builders<Widget>.Update.Inc(X=>X.x,10));
+                X=>X.x>5,
+                Builders<Widget>.Update.Inc(X=>X.x,10).Set("J",20));
             await col.Find(new BsonDocument()).ForEachAsync(x => Console.WriteLine(x));
 
             
         }
-
+        [BsonIgnoreExtraElements] // j is not preasent in Widget cm
         private class Widget
         {
             public int Id { get; set; }
