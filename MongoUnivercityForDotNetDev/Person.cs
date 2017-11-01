@@ -26,6 +26,11 @@ namespace MongoUnivercityForDotNetDev
         public List<Pet> Pets { get; set; }
 
         public BsonDocument ExtraElements { get; set; }
+
+        public override string ToString()
+        {
+            return string.Format("Id ={0}\t Name = {1}\t Age= {2}\t Profession = {3}", Id, Name, Age, Profession);
+        }
     }
 
     class Pet

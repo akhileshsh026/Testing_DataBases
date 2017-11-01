@@ -29,16 +29,15 @@ namespace MongoUnivercityForDotNetDev
             var col = db.GetCollection<Person>("People");
 
 
-            var builder = Builders<BsonDocument>.Filter;
-            var filter = builder.Lt("Age", 30)| builder.Eq("Name", "Akhilesh Kumar");  //or operator
-            var filter1 = builder.Lt("Age", 30) & builder.Eq("Name", "Akhilesh Kumar");  //And operator
-            var filter1 = builder.Lt("Age", 30) & !builder.Eq("Name", "Akhilesh Kumar");  //And not operator
+            var builder = Builders<Person>.Filter;
+            var filter = builder.Lt(x=>x.Age, 30)| builder.Eq(x=>x.Name, "Akhilesh Kumar Rajendra");  //or operator
+            
 
             var list = await col.Find(filter).ToListAsync();
 
             foreach (var item in list)
             {
-                Console.WriteLine("{0}\t{1}\t{2}\t{3}", item.Name, item.Age, item.Profession, item.Id);
+                Console.WriteLine(item);
             }
         }
 
