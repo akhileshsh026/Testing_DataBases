@@ -19,6 +19,8 @@ namespace MongoUnivercityForDotNetDev
         
         public int Age { get; set; }
 
+        public string Profession { get; set; }
+
         public List<string> Colors { get; set; }
 
         public List<Pet> Pets { get; set; }
