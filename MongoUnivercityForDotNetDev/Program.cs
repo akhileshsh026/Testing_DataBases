@@ -28,8 +28,8 @@ namespace MongoUnivercityForDotNetDev
 
             var col = db.GetCollection<Person>("People");
 
-            var filter = new BsonDocument("Name", "Akhilesh Kumar");
-            var list = await col.Find(filter).ToListAsync();
+          
+            var list = await col.Find("{Name:'Akhilesh Kumar'}").ToListAsync();
 
             foreach (var item in list)
             {
