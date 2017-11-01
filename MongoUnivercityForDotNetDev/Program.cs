@@ -22,7 +22,11 @@ namespace MongoUnivercityForDotNetDev
 
         static async Task MainAsync(string[] args)
         {
-
+            BsonClassMap.RegisterClassMap<Person>(cm =>
+            {
+                cm.AutoMap();
+                cm.MapMember(x => x.Name).SetElementName("name");
+            });
 
             var Person = new Person
             {

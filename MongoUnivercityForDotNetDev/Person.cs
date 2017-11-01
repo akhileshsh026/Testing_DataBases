@@ -16,7 +16,7 @@ namespace MongoUnivercityForDotNetDev
         public ObjectId Id { get; set; }
         
         public string Name { get; set; }
-        [BsonRepresentation(BsonType.Int64)]
+        
         public int Age { get; set; }
 
         public List<string> Colors { get; set; }
