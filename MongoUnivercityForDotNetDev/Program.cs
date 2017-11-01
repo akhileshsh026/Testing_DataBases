@@ -31,8 +31,20 @@ namespace MongoUnivercityForDotNetDev
 
             var builder = Builders<BsonDocument>.Filter;
 
-            var list = await col.Find(new BsonDocument()).Limit(2).Skip(1).Limit(3).ToListAsync(); 
+            // var list = await col.Find(new BsonDocument()).Project("{Name:1,_id:0}").ToListAsync(); 
+            // or 
+            // var list = await col.Find(new BsonDocument()).Project(new BsonDocument("Name", 1).Add("_id", 0)).ToListAsync();
+            // or
+            // var list = await col.Find(new BsonDocument()).Project(Builders<BsonDocument>.Projection.Include("Name").Exclude("_id")).ToListAsync(); cahnge t0 BsonDocument in col.
+            // also you can do a Person specific Doc Projection as follows but also the BsonDocument above ,
+            // var list = await col.Find(new BsonDocument()).Project(Builders<Person>.Projection.Include("Name").Exclude("_id")).ToListAsync();
+            // so , to make this a person that only a person can use  
+            // var list = await col.Find(new BsonDocument()).Project<Person>(Builders<Person>.Projection.Include(x=>x.Name).Exclude(x=>x.Id)).ToListAsync();  //Expression lets make you Type Safe.
+            // and as the Person class is static so we didn't get the correct data for that class needs to static. 
 
+            var list = await col.Find(new BsonDocument())
+                        .Project(x => x.Name)
+                        .ToListAsync();
             foreach (var item in list)
             {
                 Console.WriteLine(item);
