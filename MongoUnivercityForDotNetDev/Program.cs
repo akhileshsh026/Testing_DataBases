@@ -23,27 +23,20 @@ namespace MongoUnivercityForDotNetDev
 
         static async Task MainAsync(string[] args)
         {
-          // there are 3  ways to configure the mapping from POCOs to Bson
+            var client = new MongoClient("mongodb://localhost:27017");
+            var db = client.GetDatabase("test");
 
-           var conventionPack = new ConventionPack();
-            conventionPack.Add(new CamelCaseElementNameConvention());
-            ConventionRegistry.Register("camelCase", conventionPack,t=>true); // true is for all but for specific t => t.Name then only namewill be small.
+            var col = db.GetCollection<BsonDocument>("People");
 
-            var Person = new Person
+            var doc = new BsonDocument
             {
-                Name = "Akhilesh Kumar Sahu",
-                Age = 30,
-                Colors = new List<string> { "blue", "red" },
-                Pets = new List<Pet> { new Pet { Name = "Golden Retriier", Type = "Dog" } },
-                ExtraElements = new BsonDocument("anotherName", "anothervalue")
+                {"Name","Akhilesh Kumar Rajendra" },
+                {"Age",30},
+                {"Address","Bangalore"},
+                {"Compnay","Google" }
             };
 
-            using (var writer = new JsonWriter(Console.Out))
-            {
-                BsonSerializer.Serialize(writer,Person); 
-            }
-            
-
+            await col.InsertOneAsync(doc);
         }
     }
 }
