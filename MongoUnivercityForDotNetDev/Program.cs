@@ -26,17 +26,17 @@ namespace MongoUnivercityForDotNetDev
         {
             var client = new MongoClient("mongodb://localhost:27017");
             var db = client.GetDatabase("test");
-            var col = db.GetCollection<BsonDocument>("widgets");
+            var col = db.GetCollection<Widget>("widgets");
 
             await db.DropCollectionAsync("widgets");
 
-            var docs = Enumerable.Range(0, 10).Select(i => new BsonDocument("_id", i).Add("x", i));
+            var docs = Enumerable.Range(0, 10).Select(i => new Widget { Id=i,x=i });
             await col.InsertManyAsync(docs);
 
             //updateoneAsync require first filter and then update defination  
             var result = await col.UpdateManyAsync(
-                Builders<BsonDocument>.Filter.Gt("x",5),
-                Builders<BsonDocument>.Update.Inc("x",10));
+                Builders<Widget>.Filter.Gt("x",5),
+                Builders<Widget>.Update.Inc("x",10));
             await col.Find(new BsonDocument()).ForEachAsync(x => Console.WriteLine(x));
 
             
@@ -47,6 +47,11 @@ namespace MongoUnivercityForDotNetDev
             public int Id { get; set; }
             [BsonElement("X")]  
             public int x { get; set; }
+
+            public override string ToString()
+            {
+                return string.Format("ID:{0} \t X:{1}", Id, x);
+            }
         }
 
 
