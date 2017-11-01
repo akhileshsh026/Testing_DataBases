@@ -34,7 +34,7 @@ namespace MongoUnivercityForDotNetDev
             await col.InsertManyAsync(docs);
 
              
-            var result = await col.DeleteManyAsync(X => X.x > 5);
+            var result = await col.DeleteOneAsync(X => X.x > 5);
             await col.Find(new BsonDocument()).ForEachAsync(x => Console.WriteLine(x));
 
             
