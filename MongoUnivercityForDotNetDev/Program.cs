@@ -35,9 +35,9 @@ namespace MongoUnivercityForDotNetDev
 
             //Without ID 
             var result = await col.ReplaceOneAsync(
-                new BsonDocument("x",15),
-                new BsonDocument("x",56)
-                
+                new BsonDocument("x", 15),
+                new BsonDocument("x", 56),
+                new UpdateOptions { IsUpsert = true }
                 );
             await col.Find(new BsonDocument()).ForEachAsync(x => Console.WriteLine(x));
 
