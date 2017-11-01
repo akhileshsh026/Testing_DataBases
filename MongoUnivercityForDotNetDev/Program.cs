@@ -28,12 +28,17 @@ namespace MongoUnivercityForDotNetDev
 
             var col = db.GetCollection<Person>("People");
 
-            var filter = new BsonDocument("Age", new BsonDocument("$lt", 40));
+            var filter = new BsonDocument("$and", new BsonArray
+            {
+                new BsonDocument("Age", new BsonDocument("$lt", 40)),
+                new BsonDocument("Name","Akhilesh Kumar")
+            }
+            );
             var list = await col.Find(filter).ToListAsync();
 
             foreach (var item in list)
             {
-                Console.WriteLine(item);
+                Console.WriteLine("{0}\t{1}\t{2}\t{3}", item.Name,item.Age,item.Profession,item.Id);
             }
         }
     }
