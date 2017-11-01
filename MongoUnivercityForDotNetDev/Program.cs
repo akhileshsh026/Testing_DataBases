@@ -33,10 +33,8 @@ namespace MongoUnivercityForDotNetDev
             var docs = Enumerable.Range(0, 10).Select(i => new Widget { Id=i,x=i });
             await col.InsertManyAsync(docs);
 
-            //updateoneAsync require first filter and then update defination  
-            var result = await col.UpdateManyAsync(
-                X=>X.x>5,
-                Builders<Widget>.Update.Inc(X=>X.x,10).Set("J",20));
+             
+            var result = await col.DeleteManyAsync(X => X.x > 5);
             await col.Find(new BsonDocument()).ForEachAsync(x => Console.WriteLine(x));
 
             
