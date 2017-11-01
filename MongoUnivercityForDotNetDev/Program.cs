@@ -33,12 +33,10 @@ namespace MongoUnivercityForDotNetDev
             var docs = Enumerable.Range(0, 10).Select(i => new BsonDocument("_id", i).Add("x", i));
             await col.InsertManyAsync(docs);
 
-            //Without ID 
-            var result = await col.ReplaceOneAsync(
-                Builders<BsonDocument>.Filter.Eq("x",15),
-                new BsonDocument("x", 56),
-                new UpdateOptions { IsUpsert = true }
-                );
+            //updateoneAsync require first filter and then update defination  
+            var result = await col.UpdateOneAsync(
+                Builders<BsonDocument>.Filter.Eq("x",5),
+                new BsonDocument("$inc", new BsonDocument("x",10)));
             await col.Find(new BsonDocument()).ForEachAsync(x => Console.WriteLine(x));
 
             
