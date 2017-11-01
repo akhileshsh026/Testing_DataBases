@@ -31,7 +31,7 @@ namespace MongoUnivercityForDotNetDev
 
             var builder = Builders<BsonDocument>.Filter;
 
-            var list = await col.Find(new BsonDocument()).Sort(Builders<Person>.Sort.Ascending("Name").Descending("Profession")).ToListAsync();
+            var list = await col.Find(new BsonDocument()).Sort(Builders<Person>.Sort.Ascending(x=>x.Name).Descending(x=>x.Profession)).ToListAsync();
 
             foreach (var item in list)
             {
