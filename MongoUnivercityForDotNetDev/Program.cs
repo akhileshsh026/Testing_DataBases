@@ -30,13 +30,21 @@ namespace MongoUnivercityForDotNetDev
 
             var doc = new BsonDocument
             {
-                {"Name","Akhilesh Kumar Rajendra" },
+                {"Name","Akhilesh Kumar" },
                 {"Age",30},
                 {"Address","Bangalore"},
-                {"Compnay","Google" }
+                {"Compnay","MS" }
             };
 
-            await col.InsertOneAsync(doc);
+            var doc2 = new BsonDocument
+            {
+                {"Name","Akhilesh Kumar" },
+                {"Age",30},
+                {"Address","Bangalore"},
+                {"Sports","Cricket" }
+            };
+
+            await col.InsertManyAsync(new [] {doc,doc2 });
         }
     }
 }
