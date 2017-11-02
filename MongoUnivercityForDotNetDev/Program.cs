@@ -34,6 +34,9 @@ namespace MongoUnivercityForDotNetDev
             await col.InsertManyAsync(docs);
 
 
+
+
+
             //Atomic Opertaions
             var result =await col.BulkWriteAsync(new WriteModel<BsonDocument>[]
                 {
