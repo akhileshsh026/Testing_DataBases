@@ -24,26 +24,24 @@ namespace MongoUnivercityForDotNetDev
 
         static async Task MainAsync(string[] args)
         {
-            var client = new MongoClient("mongodb://localhost:27017");
+            var client = new MongoClient("mongodb://52.187.19.241:27017");
             var db = client.GetDatabase("test");
-            var col = db.GetCollection<Widget>("widgets");
+            var col = db.GetCollection<BsonDocument>("widgets");
 
             await db.DropCollectionAsync("widgets");
 
-            var docs = Enumerable.Range(0, 10).Select(i => new Widget { Id=i,x=i });
+            var docs = Enumerable.Range(0, 10).Select(i => new BsonDocument("_id",i).Add("x",i));
             await col.InsertManyAsync(docs);
 
 
             //Atomic Opertaions
-            var result = await col.FindOneAndUpdateAsync<Widget>(
-                X => X.x > 5,
-                Builders<Widget>.Update.Inc(X => X.x, 5),
-                new FindOneAndUpdateOptions<Widget, Widget>
+            var result =await col.BulkWriteAsync(new WriteModel<BsonDocument>[]
                 {
-                    ReturnDocument = ReturnDocument.After,
-                    Sort = Builders<Widget>.Sort.Descending(X => X.x)
-                }
-            );
+                    new DeleteOneModel<BsonDocument>("{x:5}"),
+                    new DeleteOneModel<BsonDocument>("{x:7}"),
+                    new UpdateManyModel<BsonDocument>("{x:{$lt:7}}","{$inc:{x:1}}")
+                });
+
             Console.WriteLine(result);
             Console.WriteLine();
             await col.Find(new BsonDocument()).ForEachAsync(x => Console.WriteLine(x));
